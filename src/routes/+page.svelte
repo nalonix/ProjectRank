@@ -96,8 +96,6 @@ let unique = {}
 </svelte:head>
 
 
-<section>
-    <Hero />
     <section id="main" class="min-h-screen py-20">
         <section class="flex flex-col items-center md:flex-row md:justify-center md:items-start w-full">
             <div class="flex flex-col flex-grow max-w-[420px] w-full gap-2 px-2 py-3">
@@ -169,17 +167,3 @@ let unique = {}
         {/if}
     </section>
 
-    <Footer />
-
-</section>
-
-
-
-
-
-
-
-
-
-
-<!-- page url -->

@@ -1,5 +1,5 @@
 <script>
-    import { Rocket, XLogo, GithubLogo, TelegramLogo } from 'phosphor-svelte'
+    import { XLogo, GithubLogo } from 'phosphor-svelte'
 </script>
 
 
