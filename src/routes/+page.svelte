@@ -1,5 +1,7 @@
 
 <script lang="ts">
+    import {page} from '$app/stores'
+    //
 	import type { ParameterItem, ProjectItem } from '../app';
     import VerticalList from './_components/VerticalList.svelte';
     import { v4 as uuid } from 'uuid'
@@ -72,6 +74,7 @@ const handleParameterInput = (e: KeyboardEvent) => {
 }
 
 let unique = {}
+
 </script>
 
 <Hero />
@@ -151,3 +154,24 @@ let unique = {}
 <Footer />
 
 
+
+
+
+
+<svelte:head>
+    <meta name="description" content="">
+    <meta />   
+
+    <title>ProjectRank</title>
+    <meta property="og:title" content="ProjectRank" />
+    <meta property="og:site_name" content="ProjectRank"/>
+    <meta property="og:description" content="Define your criteria, rank projects, and pick the next project to invest your time in." />
+    <meta property="og:type" content="website" />
+    
+    <meta property="og:url" content={`${$page.url.href}`}/>
+    <meta property="og:image" content={`${$page.url.href}assets/banner.png`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+</svelte:head>
+
+<!-- page url -->
