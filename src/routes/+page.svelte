@@ -6,7 +6,7 @@
     import VerticalList from './_components/VerticalList.svelte';
     import { v4 as uuid } from 'uuid'
     // Lib
-    import { HandTap } from 'phosphor-svelte'
+    import { Ranking } from 'phosphor-svelte'
 	import PickProject from './_components/PickProject.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import Footer from '$lib/components/Footer.svelte';
@@ -78,88 +78,6 @@ let unique = {}
 
 </script>
 
-<Hero />
-
-<section id="main" class="h-screen pt-20">
-    <section class="flex flex-col items-center md:flex-row md:justify-center md:items-start w-full">
-        <div class="flex flex-col flex-grow max-w-[420px] w-full gap-2 px-2 py-3">
-            <label class="form-control w-full">
-                <div class="label">
-                <span class="label-text font-semibold">Parameters:</span>
-                </div>
-                <input 
-                    type="text" 
-                    placeholder="Add parameter" 
-                    class="input input-bordered rounded-[4px] input-sm w-full "
-                    on:keydown={handleParameterInput}
-                />
-            </label>
-            <span>
-                <p class="text-xs">Order parameters based on their significance.</p>
-            </span>
-            <VerticalList bind:items={parameters} listName='parameters'/>
-        </div>
-        
-        <div class="flex flex-col flex-grow max-w-[420px] w-full gap-2 px-2 py-3">
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text font-semibold">Projects:</span>
-                </div>
-                <input 
-                    type="text" 
-                    placeholder="Add project name" 
-                    class="input input-bordered rounded-[4px] input-sm w-full "
-                    on:keydown={handleProjectInput}
-                />
-            </label>
-            <VerticalList bind:items={projects} listName='projects'/>
-        </div>
-    </section>
-
-    <div class="flex items-center justify-center py-2 my-2">
-        <button 
-            class="btn btn-primary btn-sm btn-wide rounded-[4px]"
-            disabled={parameters.length < 2 || projects.length < 2}
-            on:click={() => {
-                preparedData = []
-                for(let x of parameters){
-                    let obj = {
-                        id: uuid(),
-                        param: '',
-                        rank: [
-                            ''
-                        ]
-                    }
-                    obj.param = x.name;
-                    obj.rank = projects;
-                    preparedData.push(obj)
-                }
-                preparedData = preparedData
-                unique = {}
-            }}
-        >
-            Pick 
-            <HandTap size={20} weight="light" />
-        </button>
-    </div>
-
-    {#if preparedData.length}
-        <section class="flex-center">
-            {#key unique}
-                <PickProject {preparedData} {parameters} {projects} />
-            {/key} 
-        </section>
-    {/if}
-</section>
-
-
-<Footer />
-
-
-
-
-
-
 
 <svelte:head>
     <meta name="description" content="">
@@ -176,5 +94,92 @@ let unique = {}
 
     <meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
+
+
+<section>
+    <Hero />
+    <section id="main" class="min-h-screen py-20">
+        <section class="flex flex-col items-center md:flex-row md:justify-center md:items-start w-full">
+            <div class="flex flex-col flex-grow max-w-[420px] w-full gap-2 px-2 py-3">
+                <label class="form-control w-full">
+                    <div class="label">
+                    <span class="label-text font-semibold">Parameters:</span>
+                    </div>
+                    <input 
+                        type="text" 
+                        placeholder="Add parameter" 
+                        class="input input-bordered rounded-[4px] input-sm w-full "
+                        on:keydown={handleParameterInput}
+                    />
+                </label>
+                <span>
+                    <p class="text-xs">Order parameters based on their significance.</p>
+                </span>
+                <VerticalList bind:items={parameters} listName='parameters'/>
+            </div>
+            
+            <div class="flex flex-col flex-grow max-w-[420px] w-full gap-2 px-2 py-3">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text font-semibold">Projects:</span>
+                    </div>
+                    <input 
+                        type="text" 
+                        placeholder="Add project name" 
+                        class="input input-bordered rounded-[4px] input-sm w-full "
+                        on:keydown={handleProjectInput}
+                    />
+                </label>
+                <VerticalList bind:items={projects} listName='projects'/>
+            </div>
+        </section>
+
+        <div class="flex items-center justify-center py-2 my-2">
+            <button 
+                class="btn btn-primary btn-sm btn-wide rounded-[4px]"
+                disabled={parameters.length < 2 || projects.length < 2}
+                on:click={() => {
+                    preparedData = []
+                    for(let x of parameters){
+                        let obj = {
+                            id: uuid(),
+                            param: '',
+                            rank: [
+                                ''
+                            ]
+                        }
+                        obj.param = x.name;
+                        obj.rank = projects;
+                        preparedData.push(obj)
+                    }
+                    preparedData = preparedData
+                    unique = {}
+                }}
+            >
+                Rank 
+                <Ranking size={20} weight="light" />
+            </button>
+        </div>
+        {#if preparedData.length}
+            <section class="flex-center">
+                {#key unique}
+                    <PickProject {preparedData} {parameters} {projects} />
+                {/key} 
+            </section>
+        {/if}
+    </section>
+
+    <Footer />
+
+</section>
+
+
+
+
+
+
+
+
+
 
 <!-- page url -->

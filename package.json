@@ -33,6 +33,7 @@
 	"type": "module",
 	"dependencies": {
 		"chart.js": "^4.4.2",
+		"svelte-carousel": "^1.0.25",
 		"svelte-dnd-action": "^0.9.43",
 		"uuid": "^9.0.1"
 	}

@@ -1,4 +1,7 @@
 <script lang="ts">
+    // @ts-ignore
+    import Carousel from 'svelte-carousel'
+
 	import { updated } from "$app/stores";
 	import { v4 as uuid } from "uuid";
 	import Result from "./Result.svelte";
@@ -44,39 +47,79 @@
         result.sort((a, b) => b.total_score - a.total_score)
         console.log(result)
     }
+
+    
+    let caresoule : any;
+    let caresouleIndex: number = 0;
+    
+    const handlePageChange = (e: any) => {
+                caresouleIndex = e.detail;
+    }
 </script>
 
-<div class="flex-center w-full">
+<div class="flex-center w-full select-none">
+
 {#if state == 'ranking'}
-    <div class="carousel p-0.5 max-w-[450px] w-full sm:min-w-[420px] border ">
-        {#each preparedData as selection, idx (selection.id)}   
-            <div id={selection.id} class="carousel-item flex flex-col w-full mx-2">
-                <span class="p-2 text-2xl">
-                    <h1>{selection.param}</h1>
-                    <p class="text-xs">Place higher if it's the best according to this parameter.</p>
-                </span>
-                <div class="p-1">
-                    <VerticalList bind:items={selection.rank} listName={`ranking-${selection.id}`}/>
-                </div>
-                <div class="flex justify-between p-3">
-                    {#if idx > 0}
-                        <a href={`#${preparedData[idx - 1].id}`}  class="btn btn-sm no-animation">
-                            <CaretCircleDoubleLeft size={18} weight="light" />
-                            swipe
-                        </a>
-                    {/if}
-                    {#if (preparedData.length - 1) === idx}
-                        <button class="btn btn-sm" on:click={showResult}>Submit</button> 
+    <!-- <div class="carousel p-0.5 max-w-[450px] w-full sm:min-w-[420px] border "> -->
+        <Carousel
+            bind:this={caresoule}
+            on:pageChange={handlePageChange}
+            infinite={false}
+            class='relative'
+
+        >
+            {#each preparedData as selection, idx (selection.id)}   
+                <div id={selection.id} class="flex flex-col w-full">
+                    <span class="p-2 text-2xl">
+                        <h1>{selection.param}</h1>
+                        <p class="text-xs">Place higher if it's the best according to this parameter.</p>
+                    </span>
+                    <div class="p-1">
+                        <VerticalList bind:items={selection.rank} listName={`ranking-${selection.id}`}/>
+                    </div>                    
+                </div> 
+            {/each}
+                                    <!-- <div class="flex justify-between p-3">
+                        {#if idx > 0}
+                            <a href={`#${preparedData[idx - 1].id}`} >
+                                <CaretCircleDoubleLeft size={18} weight="light" />
+                                swipe
+                            </a>
+                        {/if}
+
+                            <a href={`#${preparedData[idx + 1].id}`}  class="btn btn-sm no-animation">
+                                swipe
+                                <CaretCircleDoubleRight size={18} weight="light" />
+                            </a>
+                        {/if}
+                    </div> -->
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div slot="prev" class="relative">
+                        <button class="absolute -bottom-9 left-3 btn btn-sm" on:click={() => caresoule.goToPrev()} >Prev</button>
+                    </div>
+
+                    <div slot="next"  class="cursor-pointer">
+                        {#if caresouleIndex >= (parameters.length - 1)}
+                            <button class="absolute -bottom-9 right-3 btn btn-sm" on:click={showResult} >Submit</button>
+                        {:else}
+                            <button class="absolute -bottom-9 right-3 btn btn-sm" on:click={() => caresoule.goToNext()} >Next</button>
+                        {/if}
+                    </div>
+                    <!-- <div>
+                    {#if mimo == (parameters.length - 1)}
+                        <p>You are done</p>
                     {:else}
-                        <a href={`#${preparedData[idx + 1].id}`}  class="btn btn-sm no-animation">
-                            swipe
-                            <CaretCircleDoubleRight size={18} weight="light" />
-                        </a>
+                        <p>not done</p>
                     {/if}
+                </div> -->
+
+            
+                <div slot="dots">
+                    <!-- removes dots from caresoule -->
                 </div>
-            </div> 
-        {/each}
-      </div>
+        </Carousel>
+      <!-- </div> -->
 {:else if state == 'result'}
         <Result data={result} {parameters}/>
 {/if}
