@@ -7,7 +7,18 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+		interface ProjectItem {
+			name: string,
+			id: string
+		}
+		interface ParameterItem {
+			name: string,
+			id: string
+		}
 	}
 }
 
-export {};
+export {
+	ProjectItem,
+	ParameterItem
+};
