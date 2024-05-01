@@ -157,7 +157,7 @@ let unique = {}
                 }}
             >
                 Rank 
-                <Ranking size={20} weight="light" />
+                <Ranking size={22} weight="bold" />
             </button>
         </div>
         {#if preparedData.length}
