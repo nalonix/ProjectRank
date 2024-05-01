@@ -10,6 +10,7 @@
 	import PickProject from './_components/PickProject.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { fade } from 'svelte/transition';
 
 let parameters : ParameterItem = [
     {
@@ -84,7 +85,7 @@ let unique = {}
         <div class="flex flex-col flex-grow max-w-[420px] w-full gap-2 px-2 py-3">
             <label class="form-control w-full">
                 <div class="label">
-                <span class="label-text ">Parameters:</span>
+                <span class="label-text font-semibold">Parameters:</span>
                 </div>
                 <input 
                     type="text" 
@@ -102,7 +103,7 @@ let unique = {}
         <div class="flex flex-col flex-grow max-w-[420px] w-full gap-2 px-2 py-3">
             <label class="form-control w-full">
                 <div class="label">
-                    <span class="label-text ">Projects:</span>
+                    <span class="label-text font-semibold">Projects:</span>
                 </div>
                 <input 
                     type="text" 
@@ -118,6 +119,7 @@ let unique = {}
     <div class="flex items-center justify-center py-2 my-2">
         <button 
             class="btn btn-primary btn-sm btn-wide rounded-[4px]"
+            disabled={parameters.length < 2 || projects.length < 2}
             on:click={() => {
                 preparedData = []
                 for(let x of parameters){
@@ -152,6 +154,7 @@ let unique = {}
 
 
 <Footer />
+
 
 
 
